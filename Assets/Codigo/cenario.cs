@@ -5,7 +5,7 @@ using System.Collections;
 public class cenario : MonoBehaviour {
     private float velocidade;
     private static Vector2 posicaoInicial;
-
+    private bool emloop;
     private bool emMovimento;
     public tipo_cenario tipo;
 
@@ -21,7 +21,14 @@ public class cenario : MonoBehaviour {
 
             if (SaiuTela())
             {
-                emMovimento = false;
+                if (emloop)
+                {
+                    reset();
+                }
+                else
+                {
+                    emMovimento = false;
+                }
             }
         }
 	}
@@ -30,12 +37,14 @@ public class cenario : MonoBehaviour {
     {
         float x = Camera.main.WorldToScreenPoint(transform.position).x;
 
-        return x < -Screen.width;// || x > Screen.width;
+        return x < 0;//-Screen.width;// || x > Screen.width;
     }
 
     public void reset(){
         emMovimento = true;
-        transform.position = posicaoInicial;
+        //transform.position = posicaoInicial;
+        transform.position = new Vector3(posicaoInicial.x, transform.position.y, transform.position.z);
+
     }
 
     public bool estaMovimento()
